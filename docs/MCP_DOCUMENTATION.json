@@ -1,0 +1,526 @@
+{
+  "system": {
+    "name": "Interactive Homework Learning Platform",
+    "version": "1.0.0",
+    "description": "מערכת למידה אינטראקטיבית מבוססת AI המשנה שיעורי בית למשחקים וקוויזים",
+    "languages": ["Hebrew", "English", "Mathematics"],
+    "type": "Full-Stack AI-Powered Educational Platform",
+    "status": "Production Ready",
+    "repository": "https://github.com/shkomig/Ai_OCR"
+  },
+  "architecture": {
+    "pattern": "Microservices with REST API",
+    "layers": [
+      {
+        "name": "Presentation Layer",
+        "technology": "React 18 + Vite",
+        "description": "ממשק משתמש מודרני עם תמיכה מלאה בעברית"
+      },
+      {
+        "name": "API Gateway",
+        "technology": "FastAPI",
+        "description": "REST API עם Swagger documentation"
+      },
+      {
+        "name": "Business Logic",
+        "technology": "Python Services",
+        "description": "OCR, AI Analysis, Game Generation"
+      },
+      {
+        "name": "Data Layer",
+        "technology": "SQLAlchemy + SQLite/PostgreSQL",
+        "description": "ניהול נתונים עם ORM"
+      },
+      {
+        "name": "External Services",
+        "technology": "Google Cloud Vision, Anthropic Claude",
+        "description": "שירותי AI חיצוניים"
+      }
+    ],
+    "deployment": "Docker containers with docker-compose orchestration"
+  },
+  "components": {
+    "backend": {
+      "framework": "FastAPI 0.104.1",
+      "language": "Python 3.11+",
+      "structure": {
+        "app/": {
+          "api/": "API endpoints and routing",
+          "core/": "Configuration, database, security",
+          "models/": "SQLAlchemy database models",
+          "schemas/": "Pydantic validation schemas",
+          "services/": "Business logic services"
+        }
+      },
+      "services": [
+        {
+          "name": "OCRService",
+          "file": "app/services/ocr_service.py",
+          "description": "עיבוד תמונות והפקת טקסט",
+          "dependencies": ["Google Cloud Vision API", "Pillow", "OpenCV"],
+          "methods": [
+            "preprocess_image() - עיבוד מקדים של תמונות",
+            "extract_text_google_vision() - הפקת טקסט עם Google Vision",
+            "validate_text() - אימות איכות OCR",
+            "structure_content() - ארגון התוכן למבנה",
+            "process_document() - pipeline מלא לעיבוד מסמך"
+          ]
+        },
+        {
+          "name": "ClaudeService",
+          "file": "app/services/claude_service.py",
+          "description": "ניתוח תוכן ויצירת משוב באמצעות Claude AI",
+          "dependencies": ["Anthropic Claude API"],
+          "methods": [
+            "analyze_homework_content() - ניתוח שיעורי בית",
+            "analyze_with_image() - ניתוח עם vision capabilities",
+            "generate_hints() - יצירת רמזים מדורגים",
+            "provide_feedback() - משוב מותאם אישית"
+          ]
+        },
+        {
+          "name": "GameService",
+          "file": "app/services/game_service.py",
+          "description": "יצירת תוכן אינטראקטיבי - משחקים וקוויזים",
+          "dependencies": ["ClaudeService"],
+          "methods": [
+            "generate_quiz() - יצירת קוויז מקיף",
+            "generate_game() - יצירת משחק אינטראקטיבי",
+            "generate_review_material() - יצירת חומרי לימוד"
+          ]
+        }
+      ],
+      "models": [
+        {
+          "name": "User",
+          "table": "users",
+          "fields": ["id", "username", "email", "hashed_password", "grade_level", "native_language", "subjects", "preferences"]
+        },
+        {
+          "name": "Document",
+          "table": "documents",
+          "fields": ["id", "user_id", "subject", "raw_image_uri", "ocr_data", "analysis_results", "generated_content", "processing_status"]
+        },
+        {
+          "name": "LearningContent",
+          "table": "learning_contents",
+          "fields": ["id", "document_id", "user_id", "content_type", "subject", "title", "description", "content_json", "metadata", "views", "completions", "average_score"]
+        },
+        {
+          "name": "UserProgress",
+          "table": "user_progress",
+          "fields": ["id", "user_id", "content_id", "status", "score", "time_spent_seconds", "answers", "feedback_provided"]
+        }
+      ],
+      "api_endpoints": [
+        {
+          "group": "Authentication",
+          "prefix": "/api/v1/auth",
+          "endpoints": [
+            "POST /register - הרשמת משתמש חדש",
+            "POST /login - התחברות וקבלת token",
+            "GET /me - קבלת פרופיל משתמש נוכחי"
+          ]
+        },
+        {
+          "group": "Documents",
+          "prefix": "/api/v1/documents",
+          "endpoints": [
+            "POST /upload - העלאת מסמך שיעורי בית",
+            "GET / - רשימת מסמכים של המשתמש",
+            "GET /{id} - פרטי מסמך ספציפי",
+            "GET /{id}/status - סטטוס עיבוד",
+            "DELETE /{id} - מחיקת מסמך"
+          ]
+        },
+        {
+          "group": "Content Generation",
+          "prefix": "/api/v1/content",
+          "endpoints": [
+            "POST /{document_id}/games - יצירת משחק",
+            "POST /{document_id}/quizzes - יצירת קוויז",
+            "POST /{document_id}/review-materials - יצירת חומר לימוד",
+            "GET /{content_id} - קבלת תוכן",
+            "GET /document/{document_id}/all - כל התוכן של מסמך"
+          ]
+        },
+        {
+          "group": "Progress & Analytics",
+          "prefix": "/api/v1/progress",
+          "endpoints": [
+            "POST /submit - שליחת תוצאות קוויז/משחק",
+            "GET /user/{user_id} - היסטוריית התקדמות",
+            "GET /user/{user_id}/dashboard - דשבורד אנליטיקה",
+            "GET /content/{content_id} - התקדמות בתוכן ספציפי"
+          ]
+        }
+      ]
+    },
+    "frontend": {
+      "framework": "React 18.2.0",
+      "build_tool": "Vite 5.0.8",
+      "styling": "Tailwind CSS 3.3.6",
+      "routing": "React Router DOM 6.20.0",
+      "http_client": "Axios 1.6.2",
+      "structure": {
+        "src/": {
+          "components/": "רכיבי React לשימוש חוזר",
+          "pages/": "דפי האפליקציה",
+          "services/": "API clients וממשקים לשירותים",
+          "hooks/": "Custom React hooks",
+          "utils/": "פונקציות עזר"
+        },
+        "public/": "קבצים סטטיים - לוגו ותמונות"
+      },
+      "pages": [
+        {
+          "name": "Home",
+          "path": "/",
+          "description": "דף בית עם הסבר על המערכת ותכונות"
+        },
+        {
+          "name": "Upload",
+          "path": "/upload",
+          "description": "העלאת שיעורי בית עם drag & drop"
+        },
+        {
+          "name": "Documents",
+          "path": "/documents",
+          "description": "רשימת מסמכים שהועלו"
+        },
+        {
+          "name": "DocumentDetail",
+          "path": "/documents/:id",
+          "description": "פרטי מסמך + יצירת תוכן אינטראקטיבי"
+        },
+        {
+          "name": "Quiz",
+          "path": "/quiz/:id",
+          "description": "ממשק קוויז אינטראקטיבי"
+        },
+        {
+          "name": "Game",
+          "path": "/game/:id",
+          "description": "ממשק משחק"
+        },
+        {
+          "name": "Review",
+          "path": "/review/:id",
+          "description": "חומרי לימוד וסיכומים"
+        },
+        {
+          "name": "Dashboard",
+          "path": "/dashboard",
+          "description": "דשבורד אנליטיקה והתקדמות"
+        },
+        {
+          "name": "Login",
+          "path": "/login",
+          "description": "התחברת משתמש"
+        },
+        {
+          "name": "Register",
+          "path": "/register",
+          "description": "הרשמת משתמש חדש"
+        }
+      ],
+      "components": [
+        {
+          "name": "Layout",
+          "description": "מבנה עמוד עם ניווט וכותרת עליונה"
+        }
+      ],
+      "features": [
+        "תמיכה מלאה בעברית (RTL)",
+        "עיצוב responsive למובייל וטאבלט",
+        "אנימציות ומעברים חלקים",
+        "Toast notifications למשוב למשתמש",
+        "Drag & drop להעלאת קבצים",
+        "Progress bars למעקב אחר התקדמות"
+      ]
+    }
+  },
+  "features": {
+    "core": [
+      {
+        "name": "Smart OCR Processing",
+        "description": "עיבוד חכם של תמונות שיעורי בית",
+        "capabilities": [
+          "זיהוי טקסט בעברית, אנגלית ומתמטיקה",
+          "זיהוי אוטומטי של נושא השיעור",
+          "תיקון אוטומטי של רוטציה",
+          "הערכת איכות OCR",
+          "תמיכה בכתב יד וטקסט מודפס"
+        ]
+      },
+      {
+        "name": "AI Content Analysis",
+        "description": "ניתוח מתקדם של תוכן לימודי",
+        "capabilities": [
+          "זיהוי יעדי למידה",
+          "מיפוי למערכת החינוך הישראלית",
+          "הערכת רמת קושי",
+          "זיהוי פערי ידע",
+          "המלצות מותאמות אישית"
+        ]
+      },
+      {
+        "name": "Interactive Gamification",
+        "description": "הפיכת שיעורי בית למשחקים",
+        "game_types": [
+          "Word puzzles - חידות מילים",
+          "Matching games - משחקי התאמה",
+          "Fill in the blanks - השלמת משפטים",
+          "Multiple choice - רב ברירה",
+          "True/False - נכון/לא נכון",
+          "Short answer - תשובות קצרות"
+        ],
+        "features": [
+          "רמזים מדורגים",
+          "משוב מיידי",
+          "ניקוד ומערכת נקודות",
+          "בונוס זמן",
+          "Streak bonuses"
+        ]
+      },
+      {
+        "name": "Progress Tracking",
+        "description": "מעקב אחר התקדמות והצלחה",
+        "metrics": [
+          "ציונים ממוצעים",
+          "זמן לימוד כולל",
+          "שיפור לאורך זמן",
+          "פילוח לפי נושאים",
+          "היסטוריית פעילויות"
+        ]
+      }
+    ],
+    "ai_integration": {
+      "google_cloud_vision": {
+        "purpose": "OCR וזיהוי תמונות",
+        "api_version": "v1",
+        "features_used": [
+          "DOCUMENT_TEXT_DETECTION",
+          "OBJECT_LOCALIZATION"
+        ],
+        "input": "Base64 encoded images",
+        "output": "Structured text with bounding boxes"
+      },
+      "anthropic_claude": {
+        "purpose": "ניתוח תוכן ויצירת משחקים",
+        "model": "claude-3-5-sonnet-20241022",
+        "capabilities": [
+          "Vision - ניתוח תמונות",
+          "Text analysis - ניתוח טקסט",
+          "Content generation - יצירת תוכן",
+          "Feedback generation - יצירת משוב"
+        ],
+        "max_tokens": "2048-3072",
+        "response_format": "Structured JSON"
+      }
+    }
+  },
+  "database": {
+    "orm": "SQLAlchemy 2.0.23",
+    "default": "SQLite",
+    "production_ready": "PostgreSQL",
+    "schema": {
+      "tables": [
+        {
+          "name": "users",
+          "description": "נתוני משתמשים",
+          "relationships": ["documents", "learning_contents", "progress_records"]
+        },
+        {
+          "name": "documents",
+          "description": "מסמכי שיעורי בית",
+          "relationships": ["user", "learning_contents"]
+        },
+        {
+          "name": "learning_contents",
+          "description": "תוכן לימודי שנוצר",
+          "relationships": ["document", "user", "progress_records"]
+        },
+        {
+          "name": "user_progress",
+          "description": "מעקב אחר התקדמות",
+          "relationships": ["user", "content"]
+        }
+      ]
+    },
+    "migrations": "Alembic (ready to implement)"
+  },
+  "security": {
+    "authentication": "JWT (JSON Web Tokens)",
+    "password_hashing": "bcrypt",
+    "token_expiry": "24 hours (configurable)",
+    "cors": "Configured for specific origins",
+    "file_upload": {
+      "max_size": "10MB",
+      "allowed_types": ["jpg", "jpeg", "png", "webp", "pdf"],
+      "validation": "Server-side validation"
+    },
+    "api_keys": {
+      "storage": "Environment variables",
+      "required": [
+        "ANTHROPIC_API_KEY",
+        "GOOGLE_APPLICATION_CREDENTIALS",
+        "SECRET_KEY"
+      ]
+    }
+  },
+  "deployment": {
+    "containerization": "Docker",
+    "orchestration": "Docker Compose",
+    "services": [
+      {
+        "name": "backend",
+        "image": "Python 3.11-slim",
+        "port": 8000,
+        "dependencies": ["redis"]
+      },
+      {
+        "name": "frontend",
+        "image": "Node 18-alpine + Nginx",
+        "port": 80,
+        "dependencies": ["backend"]
+      },
+      {
+        "name": "redis",
+        "image": "Redis 7-alpine",
+        "port": 6379,
+        "purpose": "Caching and session management"
+      }
+    ],
+    "environment_variables": [
+      "ANTHROPIC_API_KEY - Claude API key",
+      "GOOGLE_APPLICATION_CREDENTIALS - Google Cloud credentials",
+      "SECRET_KEY - JWT secret",
+      "DATABASE_URL - Database connection string",
+      "REDIS_HOST - Redis server host",
+      "CORS_ORIGINS - Allowed CORS origins"
+    ],
+    "volumes": [
+      "backend-uploads - Persistent file storage"
+    ]
+  },
+  "development": {
+    "setup": {
+      "backend": [
+        "Create virtual environment",
+        "Install requirements.txt",
+        "Configure .env file",
+        "Initialize database",
+        "Run: python main.py"
+      ],
+      "frontend": [
+        "npm install",
+        "Configure .env (optional)",
+        "Run: npm run dev"
+      ]
+    },
+    "testing": {
+      "backend": "pytest",
+      "frontend": "npm test",
+      "coverage_target": "80%+"
+    },
+    "code_style": {
+      "python": "PEP 8, type hints, docstrings",
+      "javascript": "Airbnb style guide, ES6+",
+      "max_line_length": 100
+    }
+  },
+  "performance": {
+    "targets": {
+      "ocr_processing": "< 3 seconds (p95)",
+      "content_generation": "< 8 seconds (p95)",
+      "api_response": "< 500ms (p95)",
+      "page_load": "< 2 seconds"
+    },
+    "optimization": {
+      "caching": "Redis for sessions and frequent data",
+      "compression": "Gzip for static assets",
+      "lazy_loading": "Images and components",
+      "code_splitting": "Vite automatic splitting"
+    }
+  },
+  "monitoring": {
+    "health_endpoint": "/health",
+    "metrics_endpoint": "/api/v1/metrics (to implement)",
+    "logging": {
+      "level": "INFO (configurable)",
+      "format": "Structured JSON logs",
+      "rotation": "Daily rotation recommended"
+    },
+    "alerts": {
+      "error_rate": "> 1%",
+      "response_time": "> 2 seconds",
+      "uptime": "< 99.5%"
+    }
+  },
+  "future_enhancements": {
+    "phase_2": [
+      "Parent dashboard with progress reports",
+      "Peer collaboration features",
+      "Teacher integration and bulk imports",
+      "Video tutorial generation",
+      "AI-powered tutoring chat",
+      "Gamification achievements & leaderboards"
+    ],
+    "phase_3": [
+      "Multi-language expansion",
+      "Teacher dashboard",
+      "Advanced gamification",
+      "LMS Integration (Canvas, Moodle, Google Classroom)",
+      "Mobile apps (React Native)",
+      "Offline mode support"
+    ],
+    "technical_improvements": [
+      "Kubernetes deployment",
+      "Service mesh (Istio)",
+      "Comprehensive test coverage (80%+)",
+      "CI/CD pipeline (GitHub Actions)",
+      "API versioning",
+      "GraphQL API option",
+      "WebSocket for real-time updates",
+      "Vector database for semantic search"
+    ]
+  },
+  "documentation": {
+    "files": [
+      "README.md - Overview and quick start",
+      "docs/SETUP.md - Detailed setup guide",
+      "docs/MCP_DOCUMENTATION.json - This file",
+      "CONTRIBUTING.md - Contribution guidelines",
+      "homework-system-design.md - System design document"
+    ],
+    "api_docs": {
+      "swagger_ui": "http://localhost:8000/docs",
+      "redoc": "http://localhost:8000/redoc",
+      "openapi_spec": "http://localhost:8000/openapi.json"
+    }
+  },
+  "license": "Educational Project",
+  "contributors": [
+    {
+      "role": "System Architect & Developer",
+      "contributions": "Full-stack implementation, AI integration, system design"
+    }
+  ],
+  "contact": {
+    "repository": "https://github.com/shkomig/Ai_OCR",
+    "issues": "https://github.com/shkomig/Ai_OCR/issues"
+  },
+  "metadata": {
+    "created": "2025-01-18",
+    "last_updated": "2025-01-18",
+    "mcp_version": "1.0",
+    "total_files": 61,
+    "total_lines_of_code": 5332,
+    "languages": {
+      "Python": "~60%",
+      "JavaScript/JSX": "~35%",
+      "Configuration": "~5%"
+    }
+  }
+}

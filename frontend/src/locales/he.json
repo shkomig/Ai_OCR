@@ -1,0 +1,240 @@
+{
+  "app": {
+    "name": "פלטפורמת למידה אינטראקטיבית",
+    "tagline": "הפוך שיעורי בית להרפתקאות אינטראקטיביות"
+  },
+  "navigation": {
+    "home": "בית",
+    "upload": "העלאה",
+    "documents": "המסמכים שלי",
+    "dashboard": "לוח בקרה",
+    "login": "התחברות",
+    "register": "הרשמה",
+    "logout": "התנתקות"
+  },
+  "home": {
+    "hero": {
+      "badge": "למידה מבוססת בינה מלאכותית",
+      "title": "הפוך שיעורי בית",
+      "titleHighlight": "להרפתקאות אינטראקטיביות",
+      "description": "העלה את שיעורי הבית שלך, תן ל-AI לנתח אותם, וקבל באופן מיידי משחקים מרתקים, קוויזים וחומרי לימוד מותאמים אישית. הלמידה מעולם לא הייתה כל כך מהנה!",
+      "uploadButton": "העלה שיעורי בית",
+      "viewDocuments": "צפה במסמכים שלי"
+    },
+    "howItWorks": {
+      "title": "איך זה עובד",
+      "subtitle": "ארבעה שלבים פשוטים להפוך את שיעורי הבית שלך לחוויית למידה אינטראקטיבית"
+    },
+    "features": {
+      "ocr": {
+        "title": "OCR חכם",
+        "description": "צלם שיעורי בית עם המצלמה של הסמארטפון. טכנולוגיית OCR מתקדמת מחלצת טקסט מיידית."
+      },
+      "ai": {
+        "title": "ניתוח AI",
+        "description": "בינה מלאכותית של Claude מנתחת תוכן, מזהה נושאים ויוצרת מסלולי למידה מותאמים אישית."
+      },
+      "games": {
+        "title": "משחקים אינטראקטיביים",
+        "description": "הפוך שיעורי בית למשחקים מרתקים, קוויזים ואתגרים אינטראקטיביים."
+      },
+      "tracking": {
+        "title": "מעקב התקדמות",
+        "description": "עקוב אחר התקדמות הלמידה, ציונים וקבל משוב מבוסס AI."
+      }
+    },
+    "subjects": {
+      "title": "נושאים נתמכים",
+      "mathematics": {
+        "title": "מתמטיקה",
+        "description": "אלגברה, גאומטריה, חשבון דיפרנציאלי ועוד"
+      },
+      "english": {
+        "title": "אנגלית",
+        "description": "קריאה, כתיבה, דקדוק ואוצר מילים"
+      },
+      "hebrew": {
+        "title": "עברית",
+        "description": "קריאה, כתיבה, דקדוק ואוצר מילים"
+      }
+    },
+    "cta": {
+      "title": "מוכן להתחיל?",
+      "description": "העלה את מסמך שיעורי הבית הראשון שלך וחווה את עתיד הלמידה",
+      "button": "התחל ללמוד עכשיו"
+    }
+  },
+  "upload": {
+    "title": "העלאת שיעורי בית",
+    "subtitle": "צלם תמונה של שיעורי הבית או העלה קובץ תמונה להתחלה",
+    "selectSubject": "בחר נושא",
+    "subjects": {
+      "mathematics": "מתמטיקה",
+      "english": "אנגלית",
+      "hebrew": "עברית"
+    },
+    "dropzone": {
+      "active": "שחרר את התמונה כאן",
+      "inactive": "גרור ושחרר תמונת שיעורי בית כאן",
+      "or": "או לחץ לבחירה מהמכשיר",
+      "chooseFile": "בחר קובץ"
+    },
+    "preview": {
+      "fileName": "שם קובץ",
+      "fileSize": "גודל",
+      "subject": "נושא"
+    },
+    "buttons": {
+      "upload": "העלה ונתח",
+      "uploading": "מעבד..."
+    },
+    "tips": {
+      "title": "טיפים לתוצאות מיטביות:",
+      "lighting": "✓ ודא תאורה טובה בעת צילום תמונות",
+      "flat": "✓ שמור על המסמך שטוח ובתוך המסגרת",
+      "formats": "✓ פורמטים נתמכים: JPG, PNG, WEBP",
+      "size": "✓ גודל קובץ מקסימלי: 10MB"
+    }
+  },
+  "documents": {
+    "title": "המסמכים שלי",
+    "count": "מסמך הועלה | מסמכים הועלו",
+    "uploadNew": "העלה חדש",
+    "empty": {
+      "title": "אין מסמכים עדיין",
+      "description": "העלה את מסמך שיעורי הבית הראשון שלך כדי להתחיל",
+      "button": "העלה מסמך"
+    },
+    "status": {
+      "pending": "ממתין",
+      "processing": "מעבד",
+      "completed": "הושלם",
+      "error": "שגיאה"
+    },
+    "stats": {
+      "games": "משחקים",
+      "quizzes": "קוויזים",
+      "reviews": "סיכומים"
+    },
+    "actions": {
+      "view": "צפה",
+      "delete": "מחק"
+    }
+  },
+  "documentDetail": {
+    "title": "פרטי מסמך",
+    "subject": "נושא",
+    "uploaded": "הועלה",
+    "extractedText": "טקסט שחולץ",
+    "topics": "נושאים",
+    "generateContent": "צור תוכן לימודי",
+    "generate": {
+      "game": {
+        "title": "צור משחק",
+        "description": "צור משחק אינטראקטיבי"
+      },
+      "quiz": {
+        "title": "צור קוויז",
+        "description": "צור קוויז תרגול"
+      },
+      "review": {
+        "title": "צור סיכום",
+        "description": "צור מדריך לימוד"
+      }
+    },
+    "sections": {
+      "games": "משחקים",
+      "quizzes": "קוויזים",
+      "reviews": "מדריכי לימוד"
+    }
+  },
+  "quiz": {
+    "progress": "שאלה {current} מתוך {total}",
+    "buttons": {
+      "previous": "הקודם",
+      "next": "הבא",
+      "submit": "שלח קוויז"
+    },
+    "results": {
+      "title": "קוויז הושלם!",
+      "score": "הציון שלך",
+      "excellent": "מצוין!",
+      "good": "עבודה מעולה!",
+      "practice": "המשך להתאמן!",
+      "backToDocuments": "חזרה למסמכים"
+    }
+  },
+  "dashboard": {
+    "title": "לוח הבקרה שלי",
+    "subtitle": "עקוב אחר התקדמות הלמידה שלך",
+    "stats": {
+      "documents": "מסמכים",
+      "gamesPlayed": "משחקים ששוחקו",
+      "quizzesCompleted": "קוויזים הושלמו",
+      "studyTime": "זמן לימוד (דקות)"
+    },
+    "averageScore": {
+      "title": "ציון ממוצע",
+      "excellent": "ביצועים מצוינים!",
+      "good": "המשך בעבודה הטובה!"
+    },
+    "recentActivities": {
+      "title": "פעילויות אחרונות",
+      "empty": "אין פעילויות עדיין"
+    },
+    "subjectBreakdown": {
+      "title": "פילוח לפי נושאים",
+      "empty": "אין נתונים עדיין"
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "ברוכים השבים",
+      "subtitle": "התחבר כדי להמשיך ללמוד",
+      "email": "אימייל",
+      "password": "סיסמה",
+      "button": "התחבר",
+      "noAccount": "אין לך חשבון?",
+      "signup": "הירשם"
+    },
+    "register": {
+      "title": "יצירת חשבון",
+      "subtitle": "התחל את מסע הלמידה שלך היום",
+      "username": "שם משתמש",
+      "email": "אימייל",
+      "password": "סיסמה",
+      "gradeLevel": "רמת כיתה",
+      "nativeLanguage": "שפת אם",
+      "subjects": "נושאים (אופציונלי)",
+      "gradeLevels": {
+        "elementary": "יסודי",
+        "middleSchool": "חטיבה",
+        "highSchool": "תיכון"
+      },
+      "languages": {
+        "hebrew": "עברית",
+        "english": "אנגלית",
+        "bilingual": "דו-לשוני"
+      },
+      "button": "צור חשבון",
+      "hasAccount": "כבר יש לך חשבון?",
+      "signin": "התחבר"
+    }
+  },
+  "footer": {
+    "copyright": "© 2025 פלטפורמת למידה אינטראקטיבית. כל הזכויות שמורות.",
+    "poweredBy": "מופעל על ידי Claude AI ו-Google Cloud Vision"
+  },
+  "common": {
+    "loading": "טוען...",
+    "error": "שגיאה",
+    "success": "הצלחה",
+    "cancel": "ביטול",
+    "save": "שמור",
+    "delete": "מחק",
+    "edit": "ערוך",
+    "close": "סגור",
+    "confirm": "אישור",
+    "back": "חזור"
+  }
+}
